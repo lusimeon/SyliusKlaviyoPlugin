@@ -8,6 +8,7 @@ use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Psr\Container\ContainerInterface;
 use Setono\SyliusKlaviyoPlugin\DTO\Properties\Factory\PropertiesFactoryInterface;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
+use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Sylius\Component\Product\Resolver\ProductVariantResolverInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -103,6 +104,14 @@ abstract class Base
     {
         /** @var ChannelContextInterface $service */
         $service = $this->serviceLocator->get('sylius.context.channel');
+
+        return $service;
+    }
+
+    protected function getLocaleContext(): LocaleContextInterface
+    {
+        /** @var LocaleContextInterface $service */
+        $service = $this->serviceLocator->get('sylius.context.locale');
 
         return $service;
     }
