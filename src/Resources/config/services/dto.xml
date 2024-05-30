@@ -23,6 +23,7 @@
                 <argument type="service" id="router"/>
                 <argument type="service" id="sylius.context.cart"/>
                 <argument type="service" id="sylius.context.channel"/>
+                <argument type="service" id="sylius.context.locale"/>
                 <argument type="service" id="sylius.product_variant_resolver.default"/>
 
             </argument>

@@ -51,6 +51,7 @@ final class Item extends Base
 
             // populate url
             $this->productUrl = $this->getUrlGenerator()->generate('sylius_shop_product_show', [
+                '_locale' => $this->getLocaleContext()->getLocaleCode(),
                 'slug' => $product->getSlug(),
             ], UrlGeneratorInterface::ABSOLUTE_URL);
 
