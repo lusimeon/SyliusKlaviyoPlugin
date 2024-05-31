@@ -33,8 +33,6 @@ final class OrderedProductPropertiesTest extends DTOTestCase
     protected function getExpectedData(): array
     {
         return [
-            '$event_id' => '1234',
-            '$value' => 29.98,
             'OrderId' => '1234',
             'ProductID' => '1111',
             'SKU' => 'WINNIEPOOH',

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\Setono\SyliusKlaviyoPlugin\DTO\Properties;
 
 use Setono\SyliusKlaviyoPlugin\DTO\Properties\CustomerProperties;
+use Setono\SyliusKlaviyoPlugin\DTO\Properties\Location;
+use Setono\SyliusKlaviyoPlugin\DTO\Properties\Subscriptions;
 use Tests\Setono\SyliusKlaviyoPlugin\DTO\DTOTestCase;
 
 /**
@@ -15,17 +17,18 @@ final class CustomerPropertiesTest extends DTOTestCase
     protected function getDTO(): CustomerProperties
     {
         $properties = $this->propertiesFactory->create(CustomerProperties::class);
-        $properties->exchangeId = 'exchange';
         $properties->firstName = 'John';
         $properties->lastName = 'Doe';
-        $properties->zip = '98612';
-        $properties->city = 'Portland';
-        $properties->region = 'Oregon';
-        $properties->country = 'US';
+        $properties->location = $this->propertiesFactory->create(Location::class);
+        $properties->location->zip = '98612';
+        $properties->location->city = 'Portland';
+        $properties->location->region = 'Oregon';
+        $properties->location->country = 'US';
         $properties->email = 'john.doe@klaviyo.com';
         $properties->phoneNumber = '+1 (786) 123 1234';
         $properties->image = 'https://example.com/john.doe.jpg';
-        $properties->consent[] = 'sms';
+        $properties->subscriptions = $this->propertiesFactory->create(Subscriptions::class);
+        $properties->subscriptions->smsMarketingSubscribe();
 
         return $properties;
     }
@@ -33,17 +36,21 @@ final class CustomerPropertiesTest extends DTOTestCase
     protected function getExpectedData(): array
     {
         return [
-            '$exchange_id' => 'exchange',
-            '$email' => 'john.doe@klaviyo.com',
-            '$first_name' => 'John',
-            '$last_name' => 'Doe',
-            '$phone_number' => '+1 (786) 123 1234',
-            '$zip' => '98612',
-            '$city' => 'Portland',
-            '$region' => 'Oregon',
-            '$country' => 'US',
-            '$image' => 'https://example.com/john.doe.jpg',
-            '$consent' => ['sms'],
+            'type' => 'profile',
+            'attributes' => [
+                'phone_number' => '+1 (786) 123 1234',
+                'first_name' => 'John',
+                'last_name' => 'Doe',
+                'image' => 'https://example.com/john.doe.jpg',
+                'location' => [
+                  'city' => 'Portland',
+                  'country' => 'US',
+                  'region' => 'Oregon',
+                  'zip' => '98612',
+                ],
+                'email' => 'john.doe@klaviyo.com',
+                'properties' => [],
+            ],
         ];
     }
 }

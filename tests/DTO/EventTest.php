@@ -14,9 +14,9 @@ final class EventTest extends DTOTestCase
     {
         $properties = $this->propertiesFactory->create(ViewedProductProperties::class);
         $properties->eventId = 'event_id';
+        $properties->value = 42;
 
         $event = new Event($properties, $this->propertiesFactory->create(CustomerProperties::class));
-        $event->token = 'public_token';
         $event->timestamp = 1631103497;
 
         return $event;
@@ -25,16 +25,31 @@ final class EventTest extends DTOTestCase
     protected function getExpectedData(): array
     {
         return [
-            'token' => 'public_token',
-            'event' => 'Viewed Product',
-            'customer_properties' => [
-                '$consent' => [],
+            'type' => 'event',
+            'attributes' => [
+                'profile' => [
+                    'data' => [
+                        'type' => 'profile',
+                        'attributes' => [
+                            'properties' => [],
+                        ],
+                    ],
+                ],
+                'metric' => [
+                    'data' => [
+                        'type' => 'metric',
+                        'attributes' => [
+                            'name' => 'Viewed Product',
+                        ],
+                    ],
+                ],
+                'unique_id' => 'event_id',
+                'time' => date('c', 1631103497),
+                'value' => 42,
+                'properties' => [
+                    'Categories' => [],
+                ],
             ],
-            'properties' => [
-                'Categories' => [],
-                '$event_id' => 'event_id',
-            ],
-            'time' => 1631103497,
         ];
     }
 }

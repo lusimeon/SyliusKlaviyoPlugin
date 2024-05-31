@@ -40,8 +40,6 @@ final class ViewedProductPropertiesTest extends DTOTestCase
             'Brand' => 'Diesel',
             'Price' => 123.95,
             'CompareAtPrice' => 234.45,
-            '$event_id' => '32f5ba0c-a869-42df-b5bc-56b9fd141f7d',
-            '$value' => 100.5,
         ];
     }
 }

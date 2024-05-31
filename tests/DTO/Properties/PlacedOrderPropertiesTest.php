@@ -40,8 +40,6 @@ final class PlacedOrderPropertiesTest extends DTOTestCase
     protected function getExpectedData(): array
     {
         return [
-            '$event_id' => '1234',
-            '$value' => 29.98,
             'OrderId' => '1234',
             'Categories' => ['Fiction', 'Classics', 'Children'],
             'ItemNames' => ['Winnie the Pooh', 'A Tale of Two Cities'],

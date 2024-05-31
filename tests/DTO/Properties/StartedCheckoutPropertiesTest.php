@@ -40,8 +40,6 @@ final class StartedCheckoutPropertiesTest extends DTOTestCase
             'Items' => [
                 ['ProductName' => 'Winnie the Pooh', 'Quantity' => 1, 'Categories' => []],
             ],
-            '$event_id' => '1000123_1387299423',
-            '$value' => 29.98,
         ];
     }
 }

@@ -39,8 +39,8 @@ final class RestClientTest extends TestCase
     public function it_gets_lists(): void
     {
         $response = new MockResponse('[{"list_id":"SaCTqE","list_name":"Your newsletter"}]');
-        $client = new RestClient($this->getHttpClient($response), 'https://a.klaviyo.com/api/v2', $this->token);
-        $lists = $client->get('lists');
+        $client = new RestClient($this->getHttpClient($response), 'https://a.klaviyo.com/api', $this->token);
+        $lists = $client->get('lists')->toArray();
 
         if (!$this->live) {
             self::assertCount(1, $lists);

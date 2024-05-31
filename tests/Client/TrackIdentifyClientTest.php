@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\Setono\SyliusKlaviyoPlugin\Client;
 
 use PHPUnit\Framework\TestCase;
+use Setono\SyliusKlaviyoPlugin\Client\RestClient;
+use Setono\SyliusKlaviyoPlugin\Client\RestClientInterface;
 use Setono\SyliusKlaviyoPlugin\Client\TrackIdentifyClient;
 use Setono\SyliusKlaviyoPlugin\DTO\Event;
 use Setono\SyliusKlaviyoPlugin\DTO\Properties\CustomerProperties;
@@ -68,8 +70,8 @@ final class TrackIdentifyClientTest extends TestCase
         $event = new Event($eventProperties, $customerProperties);
         $event->timestamp = 1631101604;
 
-        $response = new MockResponse('1');
-        $client = new TrackIdentifyClient($this->getHttpClient($response), self::getSerializer(), 'https://a.klaviyo.com/api', $this->token);
+        $response = new MockResponse('1', ['http_code' => 202]);
+        $client = new TrackIdentifyClient($this->getRestClient($response), self::getSerializer());
         $client->trackEvent($event);
 
         if ($this->live) {
@@ -86,10 +88,15 @@ final class TrackIdentifyClientTest extends TestCase
             $requestBody = urldecode($requestOptions['body']);
 
             self::assertSame('POST', $response->getRequestMethod());
-            self::assertSame('https://a.klaviyo.com/api/track', $response->getRequestUrl());
-            self::assertContains('Content-Type: application/x-www-form-urlencoded', $requestHeaders);
-            self::assertSame('data={"token":"public_token","event":"Viewed Product","customer_properties":{"$email":"test@klaviyo.com","$consent":[]},"properties":{"ProductName":"Black T-shirt","SKU":"BLACK-T-SHIRT","Categories":["T-shirts"],"ImageURL":"https:\/\/example.com\/images\/black-t-shirt.jpg","URL":"https:\/\/example.com\/t-shirts\/black-t-shirt.html","Brand":"Diesel","Price":123.95,"CompareAtPrice":234.45,"$event_id":"event_id"},"time":1631101604}', $requestBody);
+            self::assertSame('https://a.klaviyo.com/api/events/', $response->getRequestUrl());
+            self::assertContains('Content-Type: application/json', $requestHeaders);
+            self::assertSame('{"data":{"event":"Viewed Product","customer_properties":{"email":"test@klaviyo.com","properties":[]},"properties":{"ProductName":"Black T-shirt","SKU":"BLACK-T-SHIRT","Categories":["T-shirts"],"ImageURL":"https:\/\/example.com\/images\/black-t-shirt.jpg","URL":"https:\/\/example.com\/t-shirts\/black-t-shirt.html","Brand":"Diesel","Price":123.95,"CompareAtPrice":234.45},"time":1631101604}}', $requestBody);
         }
+    }
+
+    private function getRestClient(MockResponse $response): RestClientInterface
+    {
+        return new RestClient($this->getHttpClient($response), 'https://a.klaviyo.com/api', $this->token);
     }
 
     private function getHttpClient(MockResponse $response): HttpClientInterface

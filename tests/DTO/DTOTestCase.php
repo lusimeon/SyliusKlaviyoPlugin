@@ -7,6 +7,8 @@ namespace Tests\Setono\SyliusKlaviyoPlugin\DTO;
 use PHPUnit\Framework\TestCase;
 use Setono\SyliusKlaviyoPlugin\DTO\Properties\Factory\PropertiesFactory;
 use Setono\SyliusKlaviyoPlugin\DTO\Properties\Factory\PropertiesFactoryInterface;
+use Setono\SyliusKlaviyoPlugin\Serializer\EventNormalizer;
+use Setono\SyliusKlaviyoPlugin\Serializer\ProfileNormalizer;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -43,7 +45,14 @@ abstract class DTOTestCase extends TestCase
             $metadataAwareNameConverter = new MetadataAwareNameConverter($classMetadataFactory);
 
             $encoders = [new JsonEncoder()];
-            $normalizers = [new ObjectNormalizer($classMetadataFactory, $metadataAwareNameConverter)];
+            $objectNormalizer = new ObjectNormalizer($classMetadataFactory, $metadataAwareNameConverter);
+            $profileNormalizer = new ProfileNormalizer($objectNormalizer);
+            $eventNormalizer = new EventNormalizer($objectNormalizer, $profileNormalizer);
+            $normalizers = [
+                $profileNormalizer,
+                $eventNormalizer,
+                $objectNormalizer,
+            ];
 
             $this->serializer = new Serializer($normalizers, $encoders);
         }
