@@ -6,7 +6,6 @@ namespace Setono\SyliusKlaviyoPlugin\DTO;
 
 use Setono\SyliusKlaviyoPlugin\DTO\Properties\CustomerProperties;
 use Setono\SyliusKlaviyoPlugin\DTO\Properties\Properties;
-use Webmozart\Assert\Assert;
 
 final class Event
 {
@@ -23,8 +22,6 @@ final class Event
 
     public function __construct(Properties $properties, CustomerProperties $customerProperties)
     {
-        Assert::notNull($properties->event, 'You need to associate your properties with an event name, i.e. "Viewed Product"');
-
         $now = new \DateTimeImmutable();
 
         $this->event = $properties->event;

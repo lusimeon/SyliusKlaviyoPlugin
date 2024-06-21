@@ -9,7 +9,7 @@ abstract class Properties extends Base
     /**
      * The name of the associated event, i.e. 'Viewed Product'
      */
-    public ?string $event = null;
+    public string $event;
 
     public ?string $eventId = null;
 

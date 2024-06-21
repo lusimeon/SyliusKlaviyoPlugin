@@ -15,7 +15,7 @@ class StartedCheckoutProperties extends Properties
     use TaxonTrait;
 
     /** @psalm-readonly */
-    public ?string $event = 'Started Checkout';
+    public string $event = 'Started Checkout';
 
     /** @var array<array-key, string> */
     public array $itemNames = [];

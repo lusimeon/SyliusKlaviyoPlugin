@@ -13,7 +13,7 @@ class PlacedOrderProperties extends Properties
     use TaxonTrait;
 
     /** @psalm-readonly */
-    public ?string $event = 'Placed Order';
+    public string $event = 'Placed Order';
 
     public ?string $orderId = null;
 

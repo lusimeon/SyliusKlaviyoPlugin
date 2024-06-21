@@ -17,7 +17,7 @@ class OrderedProductProperties extends Properties
     use TaxonTrait;
 
     /** @psalm-readonly */
-    public ?string $event = 'Ordered Product';
+    public string $event = 'Ordered Product';
 
     public ?string $orderId = null;
 

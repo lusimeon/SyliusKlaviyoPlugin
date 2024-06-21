@@ -17,7 +17,7 @@ class ViewedProductProperties extends Properties
     use TaxonTrait;
 
     /** @psalm-readonly */
-    public ?string $event = 'Viewed Product';
+    public string $event = 'Viewed Product';
 
     public ?string $productName = null;
 

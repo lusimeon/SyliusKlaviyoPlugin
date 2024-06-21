@@ -15,7 +15,7 @@ class AddedToCartProperties extends Properties
     use TaxonTrait;
 
     /** @psalm-readonly */
-    public ?string $event = 'Added to Cart';
+    public string $event = 'Added to Cart';
 
     public ?string $addedItemProductName = null;
 

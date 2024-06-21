@@ -49,7 +49,7 @@ final class SaveEmailSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if (!$customer->isSubscribedToNewsletter()) {
+        if (false === $customer->isSubscribedToNewsletter()) {
             return;
         }
 
