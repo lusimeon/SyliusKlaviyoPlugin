@@ -26,6 +26,8 @@ final class PropertiesTest extends TestCase
         $product = new Product();
 
         $obj = new class(new Container(), [$order, $product]) extends Properties {
+            public string $event = 'Test';
+
             public bool $populatedOrder = false;
 
             public bool $populatedProduct = false;
